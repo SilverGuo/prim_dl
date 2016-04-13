@@ -3,3 +3,7 @@
 
 # System cache
 *~
+
+# folder ignored
+/data
+/.ipynb_checkpoints
