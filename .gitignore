@@ -6,4 +6,5 @@
 
 # folder ignored
 /data
+/MNIST_data
 /.ipynb_checkpoints
