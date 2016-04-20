@@ -19,11 +19,11 @@ prim_dl
 
 ### Fonctions
 
-*file_system.py*  
+***file_system.py***  
 - Create new folder  
 - Delete the folder with subfolder  
 
-*image_proc.py*  
+***image_proc.py***  
 - Open and convert the image to a special type  
 - Show the image  
 - Get the laplacien pyramid  
