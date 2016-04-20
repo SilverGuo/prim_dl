@@ -28,3 +28,9 @@ prim_dl
 - Show the image  
 - Get the laplacien pyramid  
 - Lecun local contrast normalization  
+
+***cnn***
+- To be done ...
+
+***segmentation***
+- To be done ...
