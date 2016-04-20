@@ -19,12 +19,12 @@ prim_dl
 
 ### Fonctions
 
-*file_system.py*
-1. Create new folder
-2. Delete the folder with subfolder
+*file_system.py*  
+1. Create new folder  
+2. Delete the folder with subfolder  
 
-*image_proc.py*
-1. Open and convert the image to a special type
-2. Show the image
-3. Get the laplacien pyramid
-4. Lecun local contrast normalization
+*image_proc.py*  
+1. Open and convert the image to a special type  
+2. Show the image  
+3. Get the laplacien pyramid  
+4. Lecun local contrast normalization  
