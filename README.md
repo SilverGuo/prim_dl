@@ -12,8 +12,21 @@ prim_dl
 │   └── test  
 └── scripts  
 
-- ***data***, data forlder, ignored by git. We train the model by the backgroud dataset from Stanford Lab. Also there are data below test for debug.
+- ***data***, data forlder, ignored by git. We train the model by the backgroud dataset from Stanford Lab. Also there are data below test for debug
 - ***scripts***, contain the relative fonctions
+
+----
+
+### Environment 
+
+I write this instruction under ubuntu 14.04 
+
+- Install **Anaconda** from *https://www.continuum.io/downloads* 
+- Install **Theano** from *https://anaconda.org/search?q=theano* 
+- Install **TensorFlow** from *https://anaconda.org/search?q=tensorflow* 
+- Install **OpenCV** from *https://anaconda.org/search?q=opencv* 
+- Install **C++** by *sudo apt-get install build-essential* 
+- Install **imagemagick for PIL** by *sudo apt-get install imagemagick* 
 
 ----
 
