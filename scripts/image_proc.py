@@ -6,9 +6,11 @@ from theano.tensor.nnet import conv
 from PIL import Image
 
 __all__ = ['open_convert',
+           'read_label_batch', 
            'show_image',
            'gaussian_pyramid',
            'laplacian_pyramid',
+           'lecun_lcn_batch',
            'lecun_lcn',
            'gaussian_filter']
 
@@ -19,6 +21,19 @@ def open_convert(img_file, mode):
     img = Image.open(img_file)
     img = np.asarray(img.convert(mode))
     return img
+
+#==============================================================================
+# read_label_batch
+#==============================================================================
+def read_label_batch(label_dir, imginfo, labeltype='regions'):
+    imglabel = []
+    for i in xrange(len(imginfo)):
+        label = []
+        with open(label_dir + imginfo[i][0] + '.' + labeltype + '.txt') as f:
+            for line in f:
+                label.append(map(int, line.split()))
+        imglabel.append(label)
+    return np.array(imglabel)
 
 #==============================================================================
 # show_image
@@ -50,6 +65,42 @@ def laplacian_pyramid(img, n=1):
         lp = cv2.subtract(gplist[i], ge)
         lplist.append(lp)
     return lplist
+
+#==============================================================================
+# lecun_lcn_batch
+#==============================================================================
+def lecun_lcn_batch(input, kernel_shape=9, threshold=1e-4):
+    input = np.float64(input)
+    
+    X = input.transpose(3, 0, 1, 2).reshape((input.shape[0]*input.shape[3] , 1 , input.shape[1], input.shape[2]))
+    
+    filter_shape = (1, 1, kernel_shape, kernel_shape)
+    filters = gaussian_filter(kernel_shape).reshape(filter_shape)
+    filters = theano.shared(theano._asarray(filters, dtype=theano.config.floatX), borrow=True)
+
+    convout = conv.conv2d(input=X,
+                          filters=filters,
+                          filter_shape=filter_shape,
+                          border_mode='full')
+
+    mid = int(np.floor(kernel_shape / 2.))
+    centered_X = X - convout[:, :, mid:-mid, mid:-mid]
+
+    sum_sqr_XX = conv.conv2d(input=centered_X ** 2,
+                             filters=filters,
+                             filter_shape=filter_shape,
+                             border_mode='full')
+
+    denom = T.sqrt(sum_sqr_XX[:, :, mid:-mid, mid:-mid])
+    per_img_mean = denom.mean(axis=[2, 3])
+    divisor = T.largest(per_img_mean.dimshuffle(0, 1, 'x', 'x'), denom)
+    
+    divisor = T.maximum(divisor, threshold)
+
+    new_X = centered_X / divisor
+
+    output = new_X.eval().reshape((input.shape[3], input.shape[0], input.shape[1], input.shape[2])).transpose(1, 2, 3, 0)
+    return output
 
 #==============================================================================
 # lecun_lcn
