@@ -1,4 +1,5 @@
 ## This is a python project of deep learning for scene labeling.
+#### Course Project in Telecom Paristech
 
 ----
 
